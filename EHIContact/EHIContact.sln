@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHIContact.DataAccess.InMem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHIContact.DataAccess.SQL", "EHIContact.DataAccess.SQL\EHIContact.DataAccess.SQL.csproj", "{315D0A39-661B-4599-BE77-0774E988187B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHIContact.WebAPI", "EHIContact.WebAPI\EHIContact.WebAPI.csproj", "{F2D33078-F9E8-4B96-852B-6A47A2CDAC55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHIContact.WebAPI.Tests", "EHIContact.WebAPI.Tests\EHIContact.WebAPI.Tests.csproj", "{71C63390-D01C-4EBB-8968-674E53E9CFC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{315D0A39-661B-4599-BE77-0774E988187B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{315D0A39-661B-4599-BE77-0774E988187B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{315D0A39-661B-4599-BE77-0774E988187B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2D33078-F9E8-4B96-852B-6A47A2CDAC55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2D33078-F9E8-4B96-852B-6A47A2CDAC55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2D33078-F9E8-4B96-852B-6A47A2CDAC55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2D33078-F9E8-4B96-852B-6A47A2CDAC55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71C63390-D01C-4EBB-8968-674E53E9CFC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71C63390-D01C-4EBB-8968-674E53E9CFC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71C63390-D01C-4EBB-8968-674E53E9CFC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71C63390-D01C-4EBB-8968-674E53E9CFC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
