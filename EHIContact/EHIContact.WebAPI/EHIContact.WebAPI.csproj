@@ -228,6 +228,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -313,6 +314,20 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EHIContact.Core\EHIContact.Core.csproj">
+      <Project>{0ab1a060-a9f9-4086-897a-a72430bca0db}</Project>
+      <Name>EHIContact.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EHIContact.DataAccess.InMemory\EHIContact.DataAccess.InMemory.csproj">
+      <Project>{a855f3ab-4cd3-4647-861b-fb1a16f2339c}</Project>
+      <Name>EHIContact.DataAccess.InMemory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EHIContact.DataAccess.SQL\EHIContact.DataAccess.SQL.csproj">
+      <Project>{315d0a39-661b-4599-be77-0774e988187b}</Project>
+      <Name>EHIContact.DataAccess.SQL</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

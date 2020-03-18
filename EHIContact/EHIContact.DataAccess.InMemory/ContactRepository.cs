@@ -26,10 +26,7 @@ namespace EHIContact.DataAccess.InMemory
 
         public Contact Find(int Id)
         {
-            Contact contact = contacts.Find(c => c.Id == Id);
-            if (contact != null)
-                return contact;
-            throw new Exception("Contact not found");
+            return contacts.Find(c => c.Id == Id);
         }
 
         public IQueryable<Contact> Colleciton()
@@ -42,31 +39,40 @@ namespace EHIContact.DataAccess.InMemory
             contacts.Add(contact);
         }
 
-        public void Update(Contact contact)
+        public bool Update(Contact contact)
         {
             Contact contactToUpdate = contacts.Find(c => c.Id == contact.Id);
             if (contactToUpdate != null)
+            {
                 contactToUpdate = contact;
+                return true;
+            }
             else
-                throw new Exception("Contact not found");
+                return false;
         }
 
-        public void Delete(int Id)
+        public bool Delete(int Id)
         {
             Contact contactToDelete = contacts.Find(c => c.Id == Id);
             if (contactToDelete != null)
+            {
                 contacts.Remove(contactToDelete);
+                return true;
+            }
             else
-                throw new Exception("Contact not found");
+                return false;
         }
 
-        public void InActivate(int Id)
+        public bool InActivate(int Id)
         {
             Contact contactToInActivate = contacts.Find(c => c.Id == Id);
             if (contactToInActivate != null)
+            {
                 contactToInActivate.ActiveStatus = false;
+                return true;
+            }
             else
-                throw new Exception("Contact not found");
+                return false;
         }
     }
 }
