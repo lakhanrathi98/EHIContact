@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.Caching;
 using EHIContact.Core.Models;
+using EHIContact.Core.Contracts;
 
 namespace EHIContact.DataAccess.InMemory
 {
-    public class ContactRepository
+    public class ContactInMemoryRepository : IContactDataAccessRepository
     {
         ObjectCache cache = MemoryCache.Default;
         List<Contact> contacts;
-        public ContactRepository()
+        public ContactInMemoryRepository()
         {
             contacts = cache["Contacts"] as List<Contact>;
             if (contacts == null)

@@ -1,21 +1,19 @@
-﻿using EHIContact.Core.Models;
-using EHIContact.DataAccess.InMemory;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Results;
+using EHIContact.Core.Contracts;
+using EHIContact.Core.Models;
+using EHIContact.DataAccess.InMemory;
 
 namespace EHIContact.WebAPI.Controllers
 {
     public class ContactsController : ApiController
     {
-        ContactRepository context;
-        public ContactsController()
+        IContactDataAccessRepository context;
+        public ContactsController(IContactDataAccessRepository DataAccessRepository)
         {
-            context = new ContactRepository();
+            context = DataAccessRepository;
         }
 
         [HttpGet]
@@ -48,7 +46,7 @@ namespace EHIContact.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Some exception occured while processing your request");
+                return BadRequest("Exception : " + ex.Message);
             }
         }
 
