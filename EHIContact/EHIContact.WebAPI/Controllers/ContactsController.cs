@@ -19,95 +19,93 @@ namespace EHIContact.WebAPI.Controllers
         }
 
         [HttpGet]
-        public HttpResponseMessage GetAllContacts()
+        public IHttpActionResult GetAllContacts()
         {
             try
             {
-                return Request.CreateResponse(HttpStatusCode.OK, context.Colleciton().ToList());
+                return Ok(context.Colleciton().ToList());
             }
             catch(Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                return BadRequest("Exception : "+ex.Message);
             }           
         }
 
         [HttpGet]
-        public HttpResponseMessage GetSingleContact(int id)
+        public IHttpActionResult GetSingleContact(int id)
         {
             try
             {
                 Contact contact = context.Find(id);
                 if (contact != null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, contact);
+                    return Ok(contact);
                 }
                 else
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Contact with Id = " + id.ToString() + " not found");
+                    return Content(HttpStatusCode.NotFound,"Contact with Id = " + id.ToString() + " not found");
                 }
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest,ex);
+                return BadRequest("Some exception occured while processing your request");
             }
         }
 
         [HttpPost]
-        public HttpResponseMessage AddNewContact([FromBody]Contact contact)
+        public IHttpActionResult AddNewContact([FromBody]Contact contact)
         {
             try
             { 
                 context.Insert(contact);
                 context.Commit();
-                var message = Request.CreateResponse(HttpStatusCode.Created, contact);
-                message.Headers.Location = new Uri(Request.RequestUri + contact.Id.ToString());
-                return message;
+                return Created(new Uri(Request.RequestUri + contact.Id.ToString()), contact);
             }
             catch(Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                return BadRequest("Exception : " + ex.Message);
             }
         }
 
         [HttpDelete]
-        public HttpResponseMessage DeleteContact(int id)
+        public IHttpActionResult DeleteContact(int id)
         {
             try
             {
                 if (context.Delete(id))
                 {
                     context.Commit();
-                    return Request.CreateResponse(HttpStatusCode.OK);
+                    return Ok();
                 }
                 else
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Contact with Id = " + id + " not found");
+                    return Content(HttpStatusCode.NotFound, "Contact with Id = " + id + " not found");
                 }
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                return BadRequest("Exception : " + ex.Message);
             }
         }
 
         [HttpPut]
-        public HttpResponseMessage UpdateContact([FromBody]Contact contact)
+        public IHttpActionResult UpdateContact([FromBody]Contact contact)
         {
             try
             {
                 if(context.Update(contact))
                 {
                     context.Commit();
-                    return Request.CreateResponse(HttpStatusCode.OK);
+                    return Ok();
                 }
                 else
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Contact with Id = " + contact.Id + " not found");
+                    return Content(HttpStatusCode.NotFound, "Contact with Id = " + contact.Id + " not found");
                 }
             }
             catch(Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                return BadRequest("Exception : " + ex.Message);
             }
         }
         /// <summary>
@@ -116,23 +114,23 @@ namespace EHIContact.WebAPI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPut]
-        public HttpResponseMessage InActivateContact(int id)
+        public IHttpActionResult InActivateContact(int id)
         {
             try
             {
                 if (context.InActivate(id))
                 {
                     context.Commit();
-                    return Request.CreateResponse(HttpStatusCode.OK);
+                    return Ok();
                 }
                 else
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Contact with Id : " + id + " not found");
+                    return Content(HttpStatusCode.NotFound, "Contact with Id : " + id + " not found");
                 }
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                return BadRequest("Exception : " + ex.Message);
             }
         }
     }
