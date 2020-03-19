@@ -11,7 +11,6 @@ namespace EHIContact.Core.Models
         public string FirstName { get; set; }
 
         [StringLength(30)]
-        [Required]
         public string LastName { get; set; }
 
         [Required]

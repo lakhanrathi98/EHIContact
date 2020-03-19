@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.ModelBinding;
 using EHIContact.Core.Contracts;
 using EHIContact.Core.Models;
 using EHIContact.DataAccess.InMemory;
@@ -55,9 +57,17 @@ namespace EHIContact.WebAPI.Controllers
         {
             try
             { 
-                context.Insert(contact);
-                context.Commit();
-                return Created(new Uri(Request.RequestUri + contact.Id.ToString()), contact);
+                if(ModelState.IsValid)
+                {
+                    context.Insert(contact);
+                    context.Commit();
+                    return Created(new Uri(Request.RequestUri + contact.Id.ToString()), contact);
+                }
+                else
+                {
+                    //IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                    return BadRequest(ModelState);
+                }
             }
             catch(Exception ex)
             {
@@ -91,14 +101,21 @@ namespace EHIContact.WebAPI.Controllers
         {
             try
             {
-                if(context.Update(contact))
+                if (ModelState.IsValid)
                 {
-                    context.Commit();
-                    return Ok();
+                    if (context.Update(contact))
+                    {
+                        context.Commit();
+                        return Ok();
+                    }
+                    else
+                    {
+                        return Content(HttpStatusCode.NotFound, "Contact with Id = " + contact.Id + " not found");
+                    }
                 }
                 else
                 {
-                    return Content(HttpStatusCode.NotFound, "Contact with Id = " + contact.Id + " not found");
+                    return BadRequest(ModelState);
                 }
             }
             catch(Exception ex)
