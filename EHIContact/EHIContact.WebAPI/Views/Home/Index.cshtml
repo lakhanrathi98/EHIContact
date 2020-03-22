@@ -1,13 +1,9 @@
-﻿@model IEnumerable<EHIContact.Core.Models.Contact>
+﻿@model EHIContact.Core.Models.Contact
 @{
     ViewBag.Title = "Contact Home";
 }
-
-<h2>Contact</h2>
 <br />
-<br />
-
-<button class="btn btn-primary">Add New</button>
+<a class="btn btn-success btn-sm" id="btnAddNew"><span class="glyphicon glyphicon-plus"></span> Add New</a>
 <br />
 <br />
 
@@ -18,27 +14,154 @@
             <th>Last Name</th>
             <th>Email</th>
             <th>Phone Number</th>
+            <th>Active Staus</th>
+            <th></th>
         </tr>
     </thead>
 </table>
 
 @section scripts{
-    <link href="~/Content/DataTablesPlugin.css" rel="stylesheet" />
+    <link href="~/Content/DataTablesPlugin.css" rel="stylesheet" />    
     <script src="~/Scripts/DataTablesPluginScript.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#tblContact").DataTable({
+            var contactsDataTable;
+            contactsDataTable = $("#tblContact").DataTable({
                 ajax: {
-                    url: "api/contacts/GetAllContacts",
+                    url: "http://localhost:62519/api/contacts/GetAllContacts",
                     dataSrc: ""
                 },
                 columns:
-                [
-                    {data : "FirstName"},
-                    {data: "LastName"},
-                    {data: "Email"},
-                    {data: "PhoneNumber"}
-                ]
+                    [
+                        { data: "FirstName" },
+                        { data: "LastName" },
+                        { data: "Email" },
+                        { data: "PhoneNumber" },
+                        { data: "ActiveStatus" },
+                        {
+                            data: "Id", render: function (data) {
+                                return " <a class='btn btn-xs btn-primary js-click-edit' js-id = " + data + ">Edit</a> <a class='btn btn-xs btn-danger js-click-delete' js-id = " + data + ">Delete</a>"
+                            }
+                        }
+                    ]
+            });
+
+            //To create editable row
+            $("#tblContact").on("click", ".js-click-edit", function () {
+                $(this).parent().siblings("td").attr("contenteditable", true);
+                var contactId = $(this).attr("js-id");
+                $(this).parent().prepend(" <button id='update' class='btn btn-warning btn-xs'js-id = " + contactId + " >Update</buuton>");
+                var parentRow = $(this).parent().parent("tr");
+                parentRow.find("td:eq(0)").focus();
+                $(this).remove();
+
+            });
+
+            //To delete contact
+            $("#tblContact").on("click", ".js-click-delete", function () {
+                var contactId = $(this).attr("js-id");
+                $.ajax({
+                    url: "http://localhost:62519/api/contacts/DeleteContact/" + contactId,
+                    method: "DELETE",
+                    success: function (response) {
+                        alert("Contact with id " + contactId + " deleted successfully");
+                        contactsDataTable.ajax.reload();
+                    },
+                    error: function (response) {
+                        alert("Error occurred while deleting the contact");
+                    }
+                });
+            });
+
+            //To create new row
+            $("#btnAddNew").click(function () {
+                var html = "<tr>";
+                html += "<td contenteditable id='FirstName'></td>";
+                html += "<td contenteditable id='LastName'></td>";
+                html += "<td contenteditable id='Email'></td>";
+                html += "<td contenteditable id='PhoneNumber'></td>";
+                html += "<td contenteditable id='ActiveStatus'></td>";
+                html += "<td><button class='btn btn-success btn-xs' name='insert' id='insert' >Insert</button></td>"
+                html += "</tr>";
+                $("#tblContact").prepend(html);
+            });
+
+            //To add new contact
+            $(document).on("click","#insert",function () {
+                var firstName = $("#FirstName").text();
+                var lastName = $("#LastName").text();
+                var email = $("#Email").text();
+                var phoneNumber = $("#PhoneNumber").text();
+                var activeStatus = $("#ActiveStatus").text();
+                if (firstName != '' && email != '' && phoneNumber != '' && activeStatus != '') {
+                    if (activeStatus != 'true' && activeStatus != 'false') {
+                        alert("Active staus should either be true or false");
+                    }
+                    else {
+                        $.ajax({
+                            url: "http://localhost:62519/api/contacts/AddNewContact",
+                            method: "POST",
+                            data: {
+                                FirstName: firstName,
+                                LastName: lastName,
+                                Email: email,
+                                PhoneNumber: phoneNumber,
+                                ActiveStatus: activeStatus
+                            },
+                            success: function (response) {
+                                alert("Contact added successfully");
+                                contactsDataTable.ajax.reload();
+                            },
+                            error: function (response) {
+                                alert("Error occurred while adding new contact : " + response.responseText);
+                            }
+                        });
+                    }
+                }
+                else {
+                    alert("First name,Email,Phone number and Active status are required fields");
+                }
+            });
+
+            //To update contact
+            $(document).on("click", "#update", function () {
+                var parentRow = $(this).parent().parent("tr");
+                var id = $(this).attr("js-id");
+                var firstName = parentRow.find("td:eq(0)").text();
+                var lastName = parentRow.find("td:eq(1)").text();
+                var email = parentRow.find("td:eq(2)").text();
+                var phoneNumber = parentRow.find("td:eq(3)").text();
+                var activeStatus = parentRow.find("td:eq(4)").text();
+                alert(activeStatus);
+                if (firstName != '' && email != '' && phoneNumber != '' && activeStatus != '') {
+                    if (activeStatus != 'true' && activeStatus != 'false') {
+                        alert("Active staus should either be true or false");
+                    }
+                    else {
+                        $.ajax({
+                            url: "http://localhost:62519/api/contacts/UpdateContact",
+                            method: "PUT",
+                            data: {
+                                Id: id,
+                                FirstName: firstName,
+                                LastName: lastName,
+                                Email: email,
+                                PhoneNumber: phoneNumber,
+                                ActiveStatus: activeStatus
+                            },
+                            success: function (response) {
+                                alert("Contact updated successfully");
+                                contactsDataTable.ajax.reload();
+                            },
+                            error: function (response) {
+                                alert("Error occurred while updating contact : " + response.responseText);
+                            }
+                        });
+                    }
+                }
+                else {
+                    alert("First name,Email,Phone number and Active status are required fields");
+                }
             });
         });
     </script>
