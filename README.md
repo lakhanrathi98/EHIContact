@@ -13,8 +13,8 @@ EHI Contact project repository
           
         b.	Controllers folder:
 
-          i.	ContactsController.cs file : Includes all Contact APIs
-
+          i.	ContactsController.cs file (ApiController) : Includes all Contact APIs
+          
   <b>2. EHIContact.Core : </b>This project includes required models and contracts(interfaces)
 
   <b>3. EHIContact.DataAccess.InMemory : </b>Project to create in memory data access layer.This layer is used before directly working with actual database
@@ -33,12 +33,19 @@ EHI Contact project repository
   6. API to get single contact (GET) : api/contacts/GetSingleContact/id
   7. API to add new contact (POST) : api/contacts/AddNewContact
   8. API to delete contact (DELETE) : api/contacts/DeleteContact/id
-  9. API to update contact (PUT)  : api/contacts/UpdateContact
+  9. API to update contact (PUT)  : api/contacts/UpdateContact  
+  10. API to InActivate contact (PUT) : api/contacts/InActivateContact/id
   
   
   
   
   <b>Setup Databse :</b>
   
-  1. Create database on SQL server mentioned in connection string
-  2. Run SQL migration script "DBMigrationScript.sql" present in DBMigrationScript folder of EHIContact.DataAccess.SQL project
+  Option 1. Create database on SQL server mentioned in connection string and then Run SQL migration script "DBMigrationScript.sql" present in DBMigrationScript folder of EHIContact.DataAccess.SQL project
+  
+  Option 2. Run update-database command in package manager console 
+
+  <b>Single Page Application: <b>
+  
+  I have created basic SPA to demonstrate calling Web APIs. I have used jQuery, DataTable plugin to develop this SPA.
+  HomeController.cs and Index.cshtml are the files related to this application.Just run EHIContact.WebAPI project to check this  application
