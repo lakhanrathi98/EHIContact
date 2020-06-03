@@ -38,7 +38,7 @@ EHI Contact project repository
   
   
   
-  <b>Setup Database :</b>
+  <b>Setup the Database :</b>
   
   1. Create database on SQL server mentioned in connection string
   2. Run SQL migration script "DBMigrationScript.sql" present in DBMigrationScript folder of EHIContact.DataAccess.SQL project
