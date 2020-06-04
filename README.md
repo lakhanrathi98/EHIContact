@@ -48,4 +48,4 @@ EHI Contact project repository
   <b>Single Page Application: </b>
   
   I have created basic SPA to demonstrate calling Web APIs. I have used jQuery, DataTable plugin to develop this SPA.
-  HomeController.cs and Index.cshtml are the files related to this application.Just run EHIContact.WebAPI project to check this  application...
+  HomeController.cs and Index.cshtml are the files related to this application.Just run EHIContact.WebAPI project to check this  application
