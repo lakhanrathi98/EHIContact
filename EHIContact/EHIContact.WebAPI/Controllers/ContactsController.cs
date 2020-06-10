@@ -65,7 +65,7 @@ namespace EHIContact.WebAPI.Controllers
                 }
                 else
                 {
-                    //IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                    /*IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);*/
                     return BadRequest(ModelState);
                 }
             }
